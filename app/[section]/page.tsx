@@ -1,5 +1,3 @@
-'use client'
-
 import Link from 'next/link'
 import { ArrowLeft, BarChart3, Bell, CircleDollarSign, CreditCard, LayoutDashboard, Settings, Target, TrendingUp, Wallet } from 'lucide-react'
 
@@ -13,8 +11,9 @@ const modules: Record<string, { title: string; description: string; icon: typeof
   settings: { title: 'Settings', description: 'Personalize your Expenses Tracker experience.', icon: Settings, items: ['Currency and preferences', 'Appearance settings', 'Privacy controls'] },
 }
 
-export default function ModulePage({ params }: { params: { section: string } }) {
-  const module = modules[params.section] ?? modules.transactions
+export default async function ModulePage({ params }: { params: Promise<{ section: string }> }) {
+  const { section } = await params
+  const module = modules[section] ?? modules.transactions
   const Icon = module.icon
   return <main className="min-h-screen bg-[#f6f8fc] text-slate-900 dark:bg-slate-950 dark:text-white">
     <header className="border-b border-slate-200 bg-white/90 px-5 py-5 backdrop-blur dark:border-white/10 dark:bg-slate-950/90 sm:px-10">
